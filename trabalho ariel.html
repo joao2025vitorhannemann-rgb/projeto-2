@@ -1,0 +1,523 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Organizador de Estudos</title>
+
+    <!-- Conecta o arquivo CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- O restante do seu HTML começa aqui -->
+
+</body>
+</html>
+
+<link rel="stylesheet" href="style.css">
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Estudos</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f3fb;
+            color: #292641;
+        }
+
+        header {
+            background: linear-gradient(135deg, #7664d8, #9a85ed);
+            color: white;
+            padding: 30px 8%;
+        }
+
+        header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            opacity: 0.9;
+        }
+
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .resumo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .card, .painel {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px #2926410b;
+        }
+
+        .card h3 {
+            font-size: 14px;
+            color: #77738f;
+            margin-bottom: 12px;
+        }
+
+        .numero {
+            font-size: 30px;
+            font-weight: bold;
+            color: #7664d8;
+        }
+
+        .painel {
+            margin-bottom: 22px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 10px;
+            margin-bottom: 22px;
+        }
+
+        input, select, button {
+            padding: 12px;
+            border-radius: 9px;
+            border: 1px solid #dedbea;
+            font-size: 14px;
+            min-width: 0;
+        }
+
+        input:focus, select:focus {
+            outline: 2px solid #b5a8f5;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            background: #7664d8;
+            color: white;
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        .progresso-fundo {
+            height: 12px;
+            background: #e9e5f7;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 12px;
+        }
+
+        .progresso-barra {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #7664d8, #ad9cf8);
+            transition: width 0.3s;
+        }
+
+        .filtros {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .filtros button {
+            background: #eeeafb;
+            color: #6555bc;
+        }
+
+        .filtros button.ativo {
+            background: #7664d8;
+            color: white;
+        }
+
+        .tarefa {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eeeaf5;
+        }
+
+        .tarefa:last-child {
+            border-bottom: none;
+        }
+
+        .tarefa input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #7664d8;
+        }
+
+        .detalhes {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .detalhes strong {
+            display: block;
+            overflow-wrap: anywhere;
+            margin-bottom: 6px;
+        }
+
+        .detalhes small {
+            color: #77738f;
+        }
+
+        .concluida strong {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .prioridade {
+            font-size: 12px;
+            padding: 5px 8px;
+            border-radius: 20px;
+            background: #f0edfa;
+            white-space: nowrap;
+        }
+
+        .alta {
+            background: #ffe3e3;
+            color: #c03939;
+        }
+
+        .media {
+            background: #fff0d4;
+            color: #9a6900;
+        }
+
+        .excluir {
+            background: #fff0f0;
+            color: #c03939;
+            padding: 8px 10px;
+        }
+
+        .vazio {
+            text-align: center;
+            color: #88839e;
+            padding: 25px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #858099;
+            font-size: 13px;
+        }
+
+        @media (max-width: 750px) {
+            .resumo {
+                grid-template-columns: 1fr;
+            }
+
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 25px 20px;
+            }
+
+            .tarefa {
+                flex-wrap: wrap;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>📚 Meu Organizador de Estudos</h1>
+        <p>Planeje sua rotina, organize suas matérias e alcance suas metas!</p>
+    </header>
+
+    <main>
+        <section class="resumo">
+            <div class="card">
+                <h3>📖 Total de tarefas</h3>
+                <div class="numero" id="total">0</div>
+            </div>
+
+            <div class="card">
+                <h3>✅ Concluídas</h3>
+                <div class="numero" id="concluidas">0</div>
+            </div>
+
+            <div class="card">
+                <h3>⏳ Pendentes</h3>
+                <div class="numero" id="pendentes">0</div>
+            </div>
+        </section>
+
+        <section class="painel">
+            <h2>📈 Meu progresso</h2>
+            <p id="textoProgresso">Você concluiu 0% dos seus estudos.</p>
+
+            <div class="progresso-fundo">
+                <div class="progresso-barra" id="barra"></div>
+            </div>
+        </section>
+
+        <section class="painel">
+            <h2>➕ Adicionar tarefa</h2>
+
+            <form id="formTarefa">
+                <input
+                    type="text"
+                    id="nome"
+                    placeholder="Nome da atividade"
+                    required
+                    maxlength="100"
+                >
+
+                <select id="materia" required>
+                    <option value="">Matéria</option>
+                    <option>Matemática</option>
+                    <option>Português</option>
+                    <option>História</option>
+                    <option>Geografia</option>
+                    <option>Biologia</option>
+                    <option>Química</option>
+                    <option>Física</option>
+                    <option>Inglês</option>
+                    <option>Outra</option>
+                </select>
+
+                <input type="date" id="prazo" aria-label="Prazo">
+
+                <select id="prioridade">
+                    <option value="Baixa">Baixa</option>
+                    <option value="Média" selected>Média</option>
+                    <option value="Alta">Alta</option>
+                </select>
+
+                <button type="submit">Adicionar</button>
+            </form>
+
+            <div class="filtros">
+                <button type="button" class="ativo" data-filtro="todas">
+                    Todas
+                </button>
+                <button type="button" data-filtro="pendentes">
+                    Pendentes
+                </button>
+                <button type="button" data-filtro="concluidas">
+                    Concluídas
+                </button>
+            </div>
+
+            <div id="listaTarefas">
+                <p class="vazio">Nenhuma tarefa adicionada ainda.</p>
+            </div>
+        </section>
+
+        <section class="painel">
+            <h2>💡 Dicas para estudar melhor</h2>
+            <p>🎯 Defina metas pequenas e realistas.</p>
+            <br>
+            <p>⏰ Faça pausas entre os períodos de estudo.</p>
+            <br>
+            <p>📵 Evite distrações e mantenha o celular longe.</p>
+            <br>
+            <p>🌟 Revise o conteúdo estudado todos os dias.</p>
+        </section>
+    </main>
+
+    <footer>
+        Feito para organizar sua rotina e transformar seus objetivos em conquistas. 💜
+    </footer>
+
+    <script>
+        const formulario = document.getElementById("formTarefa");
+        const lista = document.getElementById("listaTarefas");
+
+        let tarefas = [];
+
+        try {
+            tarefas = JSON.parse(
+                localStorage.getItem("minhasTarefasEstudo")
+            ) || [];
+        } catch (erro) {
+            tarefas = [];
+        }
+
+        let filtroAtual = "todas";
+
+        function salvar() {
+            localStorage.setItem(
+                "minhasTarefasEstudo",
+                JSON.stringify(tarefas)
+            );
+        }
+
+        function atualizar() {
+            const total = tarefas.length;
+            const concluidas = tarefas.filter(t => t.feita).length;
+            const pendentes = total - concluidas;
+            const porcentagem = total
+                ? Math.round((concluidas / total) * 100)
+                : 0;
+
+            document.getElementById("total").textContent = total;
+            document.getElementById("concluidas").textContent = concluidas;
+            document.getElementById("pendentes").textContent = pendentes;
+
+            document.getElementById("textoProgresso").textContent =
+                `Você concluiu ${porcentagem}% dos seus estudos.`;
+
+            document.getElementById("barra").style.width =
+                porcentagem + "%";
+
+            lista.replaceChildren();
+
+            const exibidas = tarefas.filter(t => {
+                if (filtroAtual === "pendentes") return !t.feita;
+                if (filtroAtual === "concluidas") return t.feita;
+                return true;
+            });
+
+            if (exibidas.length === 0) {
+                const mensagem = document.createElement("p");
+                mensagem.className = "vazio";
+                mensagem.textContent = tarefas.length
+                    ? "Nenhuma tarefa neste filtro."
+                    : "Nenhuma tarefa adicionada ainda.";
+                lista.appendChild(mensagem);
+                return;
+            }
+
+            exibidas.forEach(tarefa => {
+                const item = document.createElement("div");
+                item.className = "tarefa";
+
+                if (tarefa.feita) {
+                    item.classList.add("concluida");
+                }
+
+                const checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = tarefa.feita;
+                checkbox.setAttribute(
+                    "aria-label",
+                    "Marcar tarefa como concluída"
+                );
+
+                checkbox.addEventListener("change", () => {
+                    tarefa.feita = checkbox.checked;
+                    salvar();
+                    atualizar();
+                });
+
+                const detalhes = document.createElement("div");
+                detalhes.className = "detalhes";
+
+                const titulo = document.createElement("strong");
+                titulo.textContent = tarefa.nome;
+
+                const info = document.createElement("small");
+                info.textContent = tarefa.materia +
+                    (tarefa.prazo
+                        ? " • Prazo: " + tarefa.prazo.split("-").reverse().join("/")
+                        : "");
+
+                const prioridade = document.createElement("span");
+                prioridade.className = "prioridade";
+
+                if (tarefa.prioridade === "Alta") {
+                    prioridade.classList.add("alta");
+                } else if (tarefa.prioridade === "Média") {
+                    prioridade.classList.add("media");
+                }
+
+                prioridade.textContent = tarefa.prioridade;
+
+                const excluir = document.createElement("button");
+                excluir.type = "button";
+                excluir.className = "excluir";
+                excluir.textContent = "Excluir";
+                excluir.setAttribute("aria-label", "Excluir " + tarefa.nome);
+
+                excluir.addEventListener("click", () => {
+                    tarefas = tarefas.filter(t => t.id !== tarefa.id);
+                    salvar();
+                    atualizar();
+                });
+
+                detalhes.append(titulo, info);
+                item.append(checkbox, detalhes, prioridade, excluir);
+                lista.appendChild(item);
+            });
+        }
+
+        formulario.addEventListener("submit", evento => {
+            evento.preventDefault();
+
+            const nome = document.getElementById("nome").value.trim();
+            const materia = document.getElementById("materia").value;
+            const prazo = document.getElementById("prazo").value;
+            const prioridade = document.getElementById("prioridade").value;
+
+            if (!nome || !materia) return;
+
+            tarefas.push({
+                id: Date.now() + Math.random(),
+                nome,
+                materia,
+                prazo,
+                prioridade,
+                feita: false
+            });
+
+            salvar();
+            formulario.reset();
+            document.getElementById("prioridade").value = "Média";
+            atualizar();
+        });
+
+        document.querySelectorAll("[data-filtro]").forEach(botao => {
+            botao.addEventListener("click", () => {
+                filtroAtual = botao.dataset.filtro;
+
+                document.querySelectorAll("[data-filtro]").forEach(b => {
+                    b.classList.toggle("ativo", b === botao);
+                });
+
+                atualizar();
+            });
+        });
+
+        atualizar();
+    </script>
+
+</body>
+</html>
